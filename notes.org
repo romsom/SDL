@@ -1,0 +1,32 @@
+* Building SDL3 for DOS with DJGPP
+** Toolchain
+AUR Packages: djgpp-{gcc,binutils,djcrx,djcrx-bootstrap}
+** CMake
+Create a toolchain file based on =build-scripts/cmake-toolchain-mingw64-i686.cmake=
+Set =CMAKE_SYSTEM_NAME= to =DOS= according to [[https://cmake.org/cmake/help/latest/variable/CMAKE_SYSTEM_NAME.html][docs]]
+
+** Where does the platform symbol (e.g., LINUX, WINDOWS, APPLE, etc.) come from?
+From [[https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html#id4][CMake]]
+=DOS= is a valid name for =CMAKE_SYSTEM_NAME=, but there is no shorthand variable, so we have to compare =CMAKE_SYSTEM_NAME= directly.
+
+** Minimal feature set to start compilation
+SDL3 needs at least:
+#+begin_src cmake
+  set(HAVE_SDL_THREADS TRUE)
+  set(HAVE_SDL_TIMERS TRUE)
+#+end_src
+
+** Set =SDL_PLATFORM_DOS= macro
+According to the [[https://wiki.libsdl.org/SDL3/README/porting][Porting Guide]], we have to add the macro in =include/SDL_platform.h=. In reality =include/SDL_platform_defines.h= looks to be the place to set the correct macro.
+How do we find out we're being compiled with DJGPP in the C++ source? - We set it in CMake.
+Or, we find out by chance that =__DJGPP__= is already defined by the compiler. ;)
+
+** TODO Implement Drivers
+
+*** TODO Threads
+*** TODO Timers
+*** TODO Keyboard
+*** TODO Mouse
+*** TODO Video
+*** TODO PCM Audio
+*** TODO Midi

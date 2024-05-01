@@ -1252,6 +1252,11 @@ if(SDL_VIDEO)
 endif()
 
 # Platform-specific options and settings
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "DOS")
+  set(HAVE_SDL_THREADS TRUE)
+  set(HAVE_SDL_TIMERS TRUE)
+endif()
+
 if(ANDROID)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/android")
 

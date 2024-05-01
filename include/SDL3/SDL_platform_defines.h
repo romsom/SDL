@@ -28,6 +28,9 @@
 #ifndef SDL_platform_defines_h_
 #define SDL_platform_defines_h_
 
+#ifdef __DJGPP__
+#define SDL_PLATFORM_DOS 1
+#endif
 #ifdef _AIX
 #define SDL_PLATFORM_AIX    1
 #endif
